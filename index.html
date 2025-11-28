@@ -46,6 +46,28 @@
     </div>
   </div>
 
+  <!-- Sessions -->
+  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0 0V5m0 5v4m0 3v-1m-8 1a9 9 0 1116 0H4z"/>
+        </svg>
+        <h2 class="text-lg font-semibold text-gray-800">Последние сеансы</h2>
+      </div>
+      <p class="text-sm text-gray-500">Сохраняем последние 5 сеансов автоматически</p>
+    </div>
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+      <select id="sessionSelect" class="px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none min-w-[240px]">
+        <option value="">Нет сохранённых сеансов</option>
+      </select>
+      <div class="flex gap-2">
+        <button id="loadSession" class="px-4 py-2 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition disabled:bg-gray-300 disabled:cursor-not-allowed" disabled>Загрузить</button>
+        <button id="clearSessions" class="px-4 py-2 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition">Очистить</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Add Person Section -->
   <div class="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-gray-100">
     <div class="flex items-center gap-3 mb-4">
@@ -54,7 +76,7 @@
       </svg>
       <h2 class="text-xl font-bold text-gray-800">Добавить участника</h2>
     </div>
-    <form id="formPerson" class="flex gap-3">
+    <form id="formPerson" class="flex gap-3 flex-col sm:flex-row">
       <input type="text" id="personName" placeholder="Введите имя" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       <button type="submit" disabled class="px-8 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
         + Добавить
@@ -83,12 +105,16 @@
   </div>
 
   <!-- Total & Share -->
-  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-    <div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div class="flex-1">
       <div class="text-sm text-gray-500 mb-1">Общая сумма</div>
       <div id="totalSum" class="text-3xl font-bold text-indigo-600">0.00 с</div>
     </div>
-    <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition">
+    <div class="flex-1 w-full">
+      <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">Комментарий к расчёту (необязательно)</label>
+      <input id="comment" type="text" placeholder="Например, важные уточнения" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+    </div>
+    <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition w-full md:w-auto">
       Поделиться расчётом
     </button>
   </div>
@@ -141,6 +167,31 @@
       </form>
     </div>
   </div>
+
+  <div id="modalEdit" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="editTitle" class="text-xl font-bold text-gray-800">Редактировать блюдо</h3>
+        <button id="closeEdit" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+      <form id="formEdit" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Название блюда</label>
+          <input type="text" id="editName" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Цена</label>
+          <input type="number" id="editPrice" step="any" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div class="flex gap-3 flex-col sm:flex-row">
+          <button type="button" id="cancelEdit" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition">Отмена</button>
+          <button type="submit" class="flex-1 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden fixed bottom-4 right-4 px-4 py-3 bg-gray-900 text-white rounded-xl shadow-lg max-w-sm"></div>
 </div>
 
 <script>
@@ -150,6 +201,9 @@
   let tipPercent = 0;
   let personId = 0;
   let foodId = 0;
+  let editingFoodId = null;
+  let currentSessionId = Date.now();
+  const STORAGE_KEY = 'sharethebill-sessions';
 
   const els = {
     personName: document.getElementById('personName'),
@@ -160,13 +214,21 @@
     totalSum: document.getElementById('totalSum'),
     commonCard: document.getElementById('commonCard'),
     shareBtn: document.getElementById('shareBtn'),
+    comment: document.getElementById('comment'),
     emptyState: document.getElementById('emptyState'),
     modalPersonal: document.getElementById('modalPersonal'),
     modalShared: document.getElementById('modalShared'),
+    modalEdit: document.getElementById('modalEdit'),
     personalName: document.getElementById('personalName'),
     personalPrice: document.getElementById('personalPrice'),
     sharedName: document.getElementById('sharedName'),
-    sharedPrice: document.getElementById('sharedPrice')
+    sharedPrice: document.getElementById('sharedPrice'),
+    editName: document.getElementById('editName'),
+    editPrice: document.getElementById('editPrice'),
+    sessionSelect: document.getElementById('sessionSelect'),
+    loadSession: document.getElementById('loadSession'),
+    clearSessions: document.getElementById('clearSessions'),
+    toast: document.getElementById('toast')
   };
 
   // Validation
@@ -208,6 +270,8 @@
   document.getElementById('tabShared').onclick = () => els.modalShared.classList.remove('hidden');
   document.getElementById('closePersonal').onclick = () => els.modalPersonal.classList.add('hidden');
   document.getElementById('closeShared').onclick = () => els.modalShared.classList.add('hidden');
+  document.getElementById('closeEdit').onclick = closeEditModal;
+  document.getElementById('cancelEdit').onclick = closeEditModal;
 
   // Add Personal Food
   document.getElementById('formPersonal').onsubmit = e => {
@@ -240,6 +304,21 @@
     els.sharedPrice.value = '';
     els.modalShared.classList.add('hidden');
     render();
+  };
+
+  document.getElementById('formEdit').onsubmit = e => {
+    e.preventDefault();
+    if (editingFoodId === null) return;
+    const name = els.editName.value.trim();
+    const price = parseFloat(els.editPrice.value);
+    if (!name || price <= 0) return;
+    const food = foods.find(f => f.id === editingFoodId);
+    if (food) {
+      food.name = name;
+      food.price = price;
+      closeEditModal();
+      render();
+    }
   };
 
   function render() {
@@ -297,7 +376,9 @@
                     ${personalItems.map(i => `
                         <div class="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-xl">
                             <div>
-                                <div class="font-medium text-gray-800">${i.food.name}</div>
+                                <div class="font-medium text-gray-800 flex items-center gap-2">${i.food.name}
+                                  <button class="text-xs text-indigo-600 hover:text-indigo-800" data-edit="${i.foodId}">Редактировать</button>
+                                </div>
                                 <div class="text-xs text-gray-500">${i.food.price} × ${i.count}</div>
                             </div>
                             <div class="flex items-center gap-2">
@@ -346,6 +427,10 @@
         };
       });
 
+      card.querySelectorAll('button[data-edit]').forEach(btn => {
+        btn.onclick = () => openEditModal(+btn.dataset.edit);
+      });
+
       card.querySelector('button[data-delete]').onclick = () => {
         if (confirm(`Удалить ${person.name}?`)) {
           people = people.filter(p => p.id !== person.id);
@@ -364,8 +449,10 @@
         const perPerson = count > 0 ? (food.price * food.count / count) : 0;
         return `
                     <div class="bg-white p-5 rounded-xl border ${count === 0 ? 'border-gray-300' : 'border-emerald-300'} shadow-sm">
-                        <div class="flex justify-between items-center mb-3">
-                            <div class="font-semibold text-lg text-gray-800">${food.name}</div>
+                        <div class="flex justify-between items-start gap-4 mb-3 flex-col sm:flex-row sm:items-center">
+                            <div class="font-semibold text-lg text-gray-800 flex items-center gap-2">${food.name}
+                              <button class="text-xs text-emerald-600 hover:text-emerald-800" data-edit="${food.id}">Редактировать</button>
+                            </div>
                             <div class="text-gray-600">${food.price} × ${food.count} = ${(food.price * food.count).toFixed(2)} с</div>
                         </div>
                         <div class="text-sm text-gray-600 mb-4">
@@ -394,6 +481,10 @@
           render();
         };
       });
+
+      els.commonList.querySelectorAll('button[data-edit]').forEach(btn => {
+        btn.onclick = () => openEditModal(+btn.dataset.edit);
+      });
     } else {
       els.commonCard.classList.add('hidden');
     }
@@ -415,6 +506,7 @@
 
     els.totalSum.textContent = `${grandTotal.toFixed(2)} с`;
     els.shareBtn.classList.toggle('hidden', grandTotal === 0);
+    persistSession();
   }
 
   els.shareBtn.onclick = () => {
@@ -432,11 +524,126 @@
       if (delivery > 0 && people.length > 0) total += delivery / people.length;
       text += `${p.name}: ${total.toFixed(2)} с\n`;
     });
+    const comment = els.comment.value.trim();
+    if (comment) text = `${comment}\n\n${text}`;
     text += `\nЧаевые: ${tipPercent}%\nДоставка: ${delivery} с\nИтого: ${els.totalSum.textContent}`;
-    navigator.clipboard.writeText(text).then(() => alert("Скопировано!"));
+    navigator.clipboard.writeText(text).then(() => showToast("Скопировано в буфер обмена"));
   };
 
-  render();
+  function openEditModal(foodId) {
+    editingFoodId = foodId;
+    const food = foods.find(f => f.id === foodId);
+    if (!food) return;
+    els.editName.value = food.name;
+    els.editPrice.value = food.price;
+    els.editTitle.textContent = food.isShared ? 'Редактировать общее блюдо' : 'Редактировать личное блюдо';
+    els.modalEdit.classList.remove('hidden');
+  }
+
+  function closeEditModal() {
+    editingFoodId = null;
+    els.modalEdit.classList.add('hidden');
+    els.editName.value = '';
+    els.editPrice.value = '';
+  }
+
+  function showToast(message) {
+    els.toast.textContent = message;
+    els.toast.classList.remove('hidden');
+    setTimeout(() => {
+      els.toast.classList.add('hidden');
+    }, 2000);
+  }
+
+  function persistSession() {
+    const snapshot = {
+      id: currentSessionId,
+      savedAt: new Date().toISOString(),
+      people: JSON.parse(JSON.stringify(people)),
+      foods: JSON.parse(JSON.stringify(foods)),
+      delivery,
+      tipPercent,
+      comment: els.comment.value.trim()
+    };
+
+    const sessions = loadSessionsFromStorage();
+    const updated = [snapshot, ...sessions.filter(s => s.id !== snapshot.id)].slice(0, 5);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    document.cookie = `lastSession=${snapshot.id}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    renderSessions(updated);
+  }
+
+  function renderSessions(list) {
+    const sessions = list || loadSessionsFromStorage();
+    if (sessions.length === 0) {
+      els.sessionSelect.innerHTML = '<option value="">Нет сохранённых сеансов</option>';
+      els.loadSession.disabled = true;
+      return;
+    }
+
+    els.sessionSelect.innerHTML = sessions.map(s => {
+      const date = new Date(s.savedAt).toLocaleString('ru-RU');
+      return `<option value="${s.id}">${date}</option>`;
+    }).join('');
+    els.loadSession.disabled = false;
+  }
+
+  function loadSessionsFromStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  els.loadSession.onclick = () => {
+    const id = +els.sessionSelect.value;
+    const sessions = loadSessionsFromStorage();
+    const session = sessions.find(s => s.id === id);
+    if (!session) return;
+    currentSessionId = session.id;
+    people = session.people || [];
+    foods = session.foods || [];
+    delivery = session.delivery || 0;
+    tipPercent = session.tipPercent || 0;
+    personId = Math.max(0, ...people.map(p => p.id)) + 1;
+    foodId = Math.max(0, ...foods.map(f => f.id)) + 1;
+    els.deliveryCost.value = delivery;
+    els.tipPercent.value = tipPercent;
+    els.comment.value = session.comment || '';
+    render();
+    showToast('Сеанс загружен');
+  };
+
+  els.clearSessions.onclick = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    currentSessionId = Date.now();
+    renderSessions([]);
+    showToast('История сеансов очищена');
+  };
+
+  function initializeFromLastSession() {
+    const sessions = loadSessionsFromStorage();
+    renderSessions(sessions);
+    if (sessions.length === 0) {
+      render();
+      return;
+    }
+    const last = sessions[0];
+    currentSessionId = last.id;
+    people = last.people || [];
+    foods = last.foods || [];
+    delivery = last.delivery || 0;
+    tipPercent = last.tipPercent || 0;
+    personId = Math.max(0, ...people.map(p => p.id)) + 1;
+    foodId = Math.max(0, ...foods.map(f => f.id)) + 1;
+    els.deliveryCost.value = delivery;
+    els.tipPercent.value = tipPercent;
+    els.comment.value = last.comment || '';
+    render();
+  }
+
+  initializeFromLastSession();
 </script>
 </body>
 </html>
