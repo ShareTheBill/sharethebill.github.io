@@ -301,7 +301,7 @@
   // Person modal
   els.openPersonModal.onclick = () => {
     els.modalPerson.classList.remove('hidden');
-    els.personName.focus();
+    requestAnimationFrame(() => els.personName.focus());
   };
 
   function closePersonModal() {
@@ -341,8 +341,15 @@
   };
 
   // Modals
-  document.getElementById('tabPersonal').onclick = () => els.modalPersonal.classList.remove('hidden');
-  document.getElementById('tabShared').onclick = () => els.modalShared.classList.remove('hidden');
+  document.getElementById('tabPersonal').onclick = () => {
+    els.modalPersonal.classList.remove('hidden');
+    requestAnimationFrame(() => els.personalName.focus());
+  };
+
+  document.getElementById('tabShared').onclick = () => {
+    els.modalShared.classList.remove('hidden');
+    requestAnimationFrame(() => els.sharedName.focus());
+  };
   document.getElementById('closePersonal').onclick = () => els.modalPersonal.classList.add('hidden');
   document.getElementById('closeShared').onclick = () => els.modalShared.classList.add('hidden');
   document.getElementById('closeEdit').onclick = closeEditModal;
@@ -605,7 +612,7 @@
   }
 
   els.shareBtn.onclick = () => {
-    let text = "Расчёт заказа\n\n";
+    let text = "🍽️ Расчёт заказа\n";
     people.forEach(p => {
       let total = 0;
       p.personal.forEach(i => {
@@ -617,11 +624,13 @@
       });
       if (tipPercent > 0 && total > 0) total *= (1 + tipPercent/100);
       if (delivery > 0 && people.length > 0) total += delivery / people.length;
-      text += `${p.name}: ${total.toFixed(2)} с\n`;
+      text += `\n👤 ${p.name}: ${total.toFixed(2)} с`;
     });
     const comment = els.comment.value.trim();
-    if (comment) text = `${comment}\n\n${text}`;
-    text += `\nЧаевые: ${tipPercent}%\nДоставка: ${delivery} с\nИтого: ${els.totalSum.textContent}`;
+    text += `\n\n💁‍♂️ Чаевые: ${tipPercent}%`;
+    text += `\n🛵 Доставка: ${delivery} с`;
+    text += `\n🧾 Итог: ${els.totalSum.textContent}`;
+    if (comment) text += `\n\n💬 Комментарий: ${comment}`;
     navigator.clipboard.writeText(text).then(() => showToast("Скопировано в буфер обмена"));
   };
 
@@ -636,7 +645,7 @@
     els.editPrice.value = food.price;
     els.editTitle.textContent = food.isShared ? 'Редактировать общее блюдо' : 'Редактировать личное блюдо';
     els.modalEdit.classList.remove('hidden');
-    els.editName.focus();
+    requestAnimationFrame(() => els.editName.focus());
   }
 
   function closeEditModal() {
@@ -649,6 +658,7 @@
   function openDeleteModal(id) {
     pendingDeleteId = id;
     els.modalDelete.classList.remove('hidden');
+    requestAnimationFrame(() => els.confirmDelete.focus());
   }
 
   function closeDeleteModal() {
