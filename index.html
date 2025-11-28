@@ -6,7 +6,7 @@
   <title>Калькулятор заказа</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen py-8 px-4">
+<body class="bg-gray-50 min-h-screen py-8 px-4 sm:px-6 lg:px-10">
 <div class="max-w-6xl mx-auto">
   <!-- Header -->
   <div class="text-center mb-8">
@@ -36,7 +36,7 @@
   <!-- Sessions -->
   <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 flex flex-col gap-3">
     <div class="flex items-center justify-between gap-3 flex-col sm:flex-row">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 w-full sm:w-auto">
         <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0 0V5m0 5v4m0 3v-1m-8 1a9 9 0 1116 0H4z"/>
         </svg>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2 w-full sm:w-auto">
-        <div class="relative w-full min-w-[240px]">
+        <div class="relative w-full min-w-[240px] sm:min-w-[260px]">
           <select id="sessionSelect" class="w-full appearance-none rounded-xl border border-indigo-100 bg-white px-4 py-3 pr-12 text-gray-800 shadow-inner focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-200">
             <option value="">Нет сохранённых сеансов</option>
           </select>
@@ -63,21 +63,21 @@
 
 
   <!-- Delivery & Tips Badge -->
-  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 flex items-center justify-center gap-6 flex-wrap">
-    <div class="flex items-center gap-2">
+  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 grid gap-4 sm:grid-cols-2 items-center text-sm sm:text-base">
+    <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-start">
       <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
       </svg>
       <span class="text-gray-600">Доставка:</span>
-      <input type="number" id="deliveryCost" placeholder="0.00" step="any" min="0" class="w-24 px-3 py-1 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+      <input type="number" id="deliveryCost" placeholder="0.00" step="any" min="0" class="w-full sm:w-24 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       <span class="text-gray-600">с</span>
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-start">
       <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
       <span class="text-gray-600">Чаевые:</span>
-      <input type="number" id="tipPercent" placeholder="0" step="0.1" min="0" class="w-20 px-3 py-1 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+      <input type="number" id="tipPercent" placeholder="0" step="0.1" min="0" class="w-full sm:w-24 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       <span class="text-gray-600">%</span>
     </div>
   </div>
@@ -94,7 +94,7 @@
   </div>
 
   <!-- Person Cards -->
-  <div id="cards" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"></div>
+  <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6"></div>
 
   <!-- Menu Section -->
   <div id="menuCard" class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hidden mb-6">
@@ -123,23 +123,25 @@
   </div>
 
   <!-- Total & Share -->
-  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="flex-1">
-      <div class="text-sm text-gray-500 mb-1">Общая сумма</div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
+    <div class="flex flex-col gap-1">
+      <div class="text-sm text-gray-500">Общая сумма</div>
       <div id="totalSum" class="text-3xl font-bold text-indigo-600">0.00 с</div>
     </div>
-    <div class="flex-1 w-full">
+    <div class="w-full">
       <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">Комментарий к расчёту (необязательно)</label>
       <input id="comment" type="text" placeholder="Например, важные уточнения" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
     </div>
-    <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition w-full md:w-auto">
-      Поделиться расчётом
-    </button>
+    <div class="w-full lg:w-auto flex items-end lg:justify-end">
+      <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition w-full lg:w-auto">
+        Поделиться расчётом
+      </button>
+    </div>
   </div>
 
   <!-- Add Food Modal -->
   <div id="modalPerson" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить участника</h3>
       <form id="formPerson" class="space-y-4">
         <div>
@@ -155,7 +157,7 @@
   </div>
 
   <div id="modalPersonal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить личное блюдо</h3>
       <form id="formPersonal" class="space-y-4">
         <div>
@@ -179,7 +181,7 @@
   </div>
 
   <div id="modalShared" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить общее блюдо</h3>
       <form id="formShared" class="space-y-4">
         <div>
@@ -203,7 +205,7 @@
   </div>
 
   <div id="modalEdit" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <div class="flex items-center justify-between mb-4">
         <h3 id="editTitle" class="text-xl font-bold text-gray-800">Редактировать блюдо</h3>
         <button id="closeEdit" class="text-gray-400 hover:text-gray-600">✕</button>
