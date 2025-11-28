@@ -6,60 +6,80 @@
   <title>Калькулятор заказа</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen py-8 px-4">
-<div class="max-w-4xl mx-auto">
+<body class="bg-gray-50 min-h-screen py-8 px-4 sm:px-6 lg:px-10">
+<div class="max-w-6xl mx-auto">
   <!-- Header -->
   <div class="text-center mb-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-2">Калькулятор заказа</h1>
     <p class="text-gray-500">Разделите счёт между участниками</p>
   </div>
 
-  <!-- Tab Buttons -->
-  <div class="flex gap-3 mb-6">
-    <button id="tabPersonal" class="flex-1 py-4 px-6 bg-indigo-500 text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-indigo-600 transition">
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 space-y-3">
+    <button id="openPersonModal" class="w-full px-5 py-4 rounded-xl bg-indigo-50 text-indigo-700 font-semibold border border-indigo-100 hover:bg-indigo-100 transition flex items-center justify-center gap-2">
       <span class="text-xl">+</span>
-      <span>Личное блюдо</span>
+      <span>Добавить участника</span>
     </button>
-    <button id="tabShared" class="flex-1 py-4 px-6 bg-emerald-500 text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-emerald-600 transition">
-      <span class="text-xl">✕</span>
-      <span>Общее блюдо</span>
-    </button>
+    <div class="flex gap-3 flex-col sm:flex-row">
+      <button id="tabPersonal" class="flex-1 py-4 px-6 bg-indigo-500 text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-indigo-600 transition">
+        <span class="text-xl">+</span>
+        <span>Личное блюдо</span>
+      </button>
+      <button id="tabShared" class="flex-1 py-4 px-6 bg-emerald-500 text-white rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-emerald-600 transition">
+        <span class="text-xl">✕</span>
+        <span>Общее блюдо</span>
+      </button>
+    </div>
   </div>
 
+
+  <!-- Sessions -->
+  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 flex flex-col gap-3">
+    <div class="flex items-center justify-between gap-3 flex-col sm:flex-row">
+      <div class="flex items-center gap-2 w-full sm:w-auto">
+        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2-1.343-2-3-2zm0 0V5m0 5v4m0 3v-1m-8 1a9 9 0 1116 0H4z"/>
+        </svg>
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">Последние сеансы</h2>
+          <p class="text-sm text-gray-500">Сохраняем последние 5 сеансов автоматически</p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+        <div class="relative w-full min-w-[220px] sm:min-w-[260px]">
+          <select id="sessionSelect" class="w-full appearance-none rounded-xl border border-indigo-100 bg-white px-4 py-3 pr-12 text-gray-800 shadow-inner focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-200">
+            <option value="">Нет сохранённых сеансов</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-indigo-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <button id="newSession" class="px-4 py-3 bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 transition whitespace-nowrap w-full sm:w-auto text-center">Новый сеанс</button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- Delivery & Tips Badge -->
-  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 flex items-center justify-center gap-6 flex-wrap">
-    <div class="flex items-center gap-2">
+  <div class="bg-white rounded-2xl p-4 mb-6 shadow-sm border border-gray-100 grid gap-4 sm:grid-cols-2 items-center text-sm sm:text-base">
+    <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-start">
       <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
       </svg>
       <span class="text-gray-600">Доставка:</span>
-      <input type="number" id="deliveryCost" placeholder="0.00" step="any" min="0" class="w-24 px-3 py-1 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+      <input type="number" id="deliveryCost" placeholder="0.00" step="any" min="0" class="w-full sm:w-24 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       <span class="text-gray-600">с</span>
     </div>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-start">
       <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
       </svg>
       <span class="text-gray-600">Чаевые:</span>
-      <input type="number" id="tipPercent" placeholder="0" step="0.1" min="0" class="w-20 px-3 py-1 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+      <input type="number" id="tipPercent" placeholder="0" step="0.1" min="0" class="w-full sm:w-24 px-3 py-2 border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       <span class="text-gray-600">%</span>
     </div>
-  </div>
-
-  <!-- Add Person Section -->
-  <div class="bg-white rounded-2xl p-6 mb-6 shadow-sm border border-gray-100">
-    <div class="flex items-center gap-3 mb-4">
-      <svg class="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-      </svg>
-      <h2 class="text-xl font-bold text-gray-800">Добавить участника</h2>
-    </div>
-    <form id="formPerson" class="flex gap-3">
-      <input type="text" id="personName" placeholder="Введите имя" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-      <button type="submit" disabled class="px-8 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition">
-        + Добавить
-      </button>
-    </form>
   </div>
 
   <!-- Empty State -->
@@ -74,28 +94,70 @@
   </div>
 
   <!-- Person Cards -->
-  <div id="cards" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6"></div>
+  <div id="cards" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-6"></div>
 
-  <!-- Common Foods Section -->
-  <div id="commonCard" class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200 shadow-sm hidden mb-6">
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Общие блюда (делятся только между выбравшими)</h2>
-    <div id="commonList" class="space-y-4"></div>
+  <!-- Menu Section -->
+  <div id="menuCard" class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hidden mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+      <div>
+        <h2 class="text-xl font-bold text-gray-800">Список блюд</h2>
+        <p class="text-sm text-gray-500">Отдельно общие и личные позиции</p>
+      </div>
+    </div>
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 p-4">
+        <div class="flex items-center justify-between mb-3 gap-2">
+          <h3 class="text-lg font-semibold text-gray-800">Общие блюда</h3>
+          <span class="text-xs px-3 py-1 rounded-full bg-white/70 text-emerald-700 border border-emerald-100">Делятся между выбранными</span>
+        </div>
+        <div id="sharedList" class="space-y-3"></div>
+      </div>
+      <div class="rounded-2xl bg-indigo-50 border border-indigo-200 p-4">
+        <div class="flex items-center justify-between mb-3 gap-2">
+          <h3 class="text-lg font-semibold text-gray-800">Личные блюда</h3>
+          <span class="text-xs px-3 py-1 rounded-full bg-white/70 text-indigo-700 border border-indigo-100">Для отдельных гостей</span>
+        </div>
+        <div id="personalList" class="space-y-3"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Total & Share -->
-  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between">
-    <div>
-      <div class="text-sm text-gray-500 mb-1">Общая сумма</div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
+    <div class="flex flex-col gap-1">
+      <div class="text-sm text-gray-500">Общая сумма</div>
       <div id="totalSum" class="text-3xl font-bold text-indigo-600">0.00 с</div>
     </div>
-    <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition">
-      Поделиться расчётом
-    </button>
+    <div class="w-full">
+      <label for="comment" class="block text-sm font-medium text-gray-700 mb-2">Комментарий к расчёту (необязательно)</label>
+      <input id="comment" type="text" placeholder="Например, важные уточнения" class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+    </div>
+    <div class="w-full lg:w-auto flex items-end lg:justify-end">
+      <button id="shareBtn" class="hidden px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition w-full lg:w-auto">
+        Поделиться расчётом
+      </button>
+    </div>
   </div>
 
   <!-- Add Food Modal -->
+  <div id="modalPerson" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить участника</h3>
+      <form id="formPerson" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Имя</label>
+          <input type="text" id="personName" placeholder="Введите имя" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div class="flex gap-3">
+          <button type="button" id="closePerson" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition">Отмена</button>
+          <button type="submit" id="submitPerson" disabled class="flex-1 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition">Добавить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="modalPersonal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить личное блюдо</h3>
       <form id="formPersonal" class="space-y-4">
         <div>
@@ -119,7 +181,7 @@
   </div>
 
   <div id="modalShared" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
       <h3 class="text-xl font-bold text-gray-800 mb-4">Добавить общее блюдо</h3>
       <form id="formShared" class="space-y-4">
         <div>
@@ -141,6 +203,47 @@
       </form>
     </div>
   </div>
+
+  <div id="modalEdit" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="editTitle" class="text-xl font-bold text-gray-800">Редактировать блюдо</h3>
+        <button id="closeEdit" class="text-gray-400 hover:text-gray-600">✕</button>
+      </div>
+      <form id="formEdit" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Название блюда</label>
+          <input type="text" id="editName" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Цена</label>
+          <input type="number" id="editPrice" step="any" min="0" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div class="flex gap-3 flex-col sm:flex-row">
+          <button type="button" id="cancelEdit" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition">Отмена</button>
+          <button type="submit" class="flex-1 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-xl hover:bg-indigo-600 transition">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalDelete" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md space-y-4">
+      <h3 class="text-xl font-bold text-gray-800">Удалить участника</h3>
+      <p class="text-gray-600 text-sm">Вы уверены, что хотите удалить этого участника и его блюда?</p>
+      <div class="flex gap-3 flex-col sm:flex-row">
+        <button type="button" id="cancelDelete" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition">Отмена</button>
+        <button type="button" id="confirmDelete" class="flex-1 px-6 py-3 bg-red-500 text-white font-semibold rounded-xl hover:bg-red-600 transition">Удалить</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden fixed bottom-6 right-6 w-full max-w-sm translate-y-4 opacity-0 transition-all duration-300">
+    <div class="rounded-2xl border border-indigo-100 bg-white/90 backdrop-blur shadow-xl px-4 py-3 flex items-start gap-3">
+      <div class="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-indigo-50 text-indigo-600">✓</div>
+      <div class="text-sm font-medium text-gray-800" id="toastMessage"></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -150,29 +253,66 @@
   let tipPercent = 0;
   let personId = 0;
   let foodId = 0;
+  let editingFoodId = null;
+  let currentSessionId = Date.now();
+  const STORAGE_KEY = 'sharethebill-sessions';
+  let toastTimeout;
 
   const els = {
     personName: document.getElementById('personName'),
+    submitPerson: document.getElementById('submitPerson'),
     deliveryCost: document.getElementById('deliveryCost'),
     tipPercent: document.getElementById('tipPercent'),
     cards: document.getElementById('cards'),
-    commonList: document.getElementById('commonList'),
+    sharedList: document.getElementById('sharedList'),
+    personalList: document.getElementById('personalList'),
     totalSum: document.getElementById('totalSum'),
-    commonCard: document.getElementById('commonCard'),
+    menuCard: document.getElementById('menuCard'),
     shareBtn: document.getElementById('shareBtn'),
+    comment: document.getElementById('comment'),
     emptyState: document.getElementById('emptyState'),
     modalPersonal: document.getElementById('modalPersonal'),
     modalShared: document.getElementById('modalShared'),
+    modalEdit: document.getElementById('modalEdit'),
     personalName: document.getElementById('personalName'),
     personalPrice: document.getElementById('personalPrice'),
     sharedName: document.getElementById('sharedName'),
-    sharedPrice: document.getElementById('sharedPrice')
+    sharedPrice: document.getElementById('sharedPrice'),
+    editName: document.getElementById('editName'),
+    editPrice: document.getElementById('editPrice'),
+    editTitle: document.getElementById('editTitle'),
+    sessionSelect: document.getElementById('sessionSelect'),
+    newSession: document.getElementById('newSession'),
+    modalPerson: document.getElementById('modalPerson'),
+    openPersonModal: document.getElementById('openPersonModal'),
+    closePerson: document.getElementById('closePerson'),
+    modalDelete: document.getElementById('modalDelete'),
+    cancelDelete: document.getElementById('cancelDelete'),
+    confirmDelete: document.getElementById('confirmDelete'),
+    toast: document.getElementById('toast'),
+    toastMessage: document.getElementById('toastMessage')
   };
+
+  let pendingDeleteId = null;
 
   // Validation
   els.personName.addEventListener('input', () => {
-    document.querySelector('#formPerson button').disabled = els.personName.value.trim().length < 2;
+    els.submitPerson.disabled = els.personName.value.trim().length < 2;
   });
+
+  // Person modal
+  els.openPersonModal.onclick = () => {
+    els.modalPerson.classList.remove('hidden');
+    requestAnimationFrame(() => els.personName.focus());
+  };
+
+  function closePersonModal() {
+    els.modalPerson.classList.add('hidden');
+    els.personName.value = '';
+    els.submitPerson.disabled = true;
+  }
+
+  els.closePerson.onclick = closePersonModal;
 
   // Add Person
   document.getElementById('formPerson').onsubmit = e => {
@@ -187,8 +327,7 @@
     });
 
     people.push(newPerson);
-    els.personName.value = '';
-    document.querySelector('#formPerson button').disabled = true;
+    closePersonModal();
     render();
   };
 
@@ -204,10 +343,19 @@
   };
 
   // Modals
-  document.getElementById('tabPersonal').onclick = () => els.modalPersonal.classList.remove('hidden');
-  document.getElementById('tabShared').onclick = () => els.modalShared.classList.remove('hidden');
+  document.getElementById('tabPersonal').onclick = () => {
+    els.modalPersonal.classList.remove('hidden');
+    requestAnimationFrame(() => els.personalName.focus());
+  };
+
+  document.getElementById('tabShared').onclick = () => {
+    els.modalShared.classList.remove('hidden');
+    requestAnimationFrame(() => els.sharedName.focus());
+  };
   document.getElementById('closePersonal').onclick = () => els.modalPersonal.classList.add('hidden');
   document.getElementById('closeShared').onclick = () => els.modalShared.classList.add('hidden');
+  document.getElementById('closeEdit').onclick = closeEditModal;
+  document.getElementById('cancelEdit').onclick = closeEditModal;
 
   // Add Personal Food
   document.getElementById('formPersonal').onsubmit = e => {
@@ -242,11 +390,26 @@
     render();
   };
 
+  document.getElementById('formEdit').onsubmit = e => {
+    e.preventDefault();
+    if (editingFoodId === null) return;
+    const name = els.editName.value.trim();
+    const price = parseFloat(els.editPrice.value);
+    if (!name || price <= 0) return;
+    const food = foods.find(f => f.id === editingFoodId);
+    if (food) {
+      food.name = name;
+      food.price = price;
+      closeEditModal();
+      render();
+    }
+  };
+
   function render() {
     if (people.length === 0) {
       els.emptyState.classList.remove('hidden');
       els.cards.innerHTML = '';
-      els.commonCard.classList.add('hidden');
+      els.menuCard.classList.add('hidden');
       els.shareBtn.classList.add('hidden');
       return;
     }
@@ -346,45 +509,79 @@
         };
       });
 
-      card.querySelector('button[data-delete]').onclick = () => {
-        if (confirm(`Удалить ${person.name}?`)) {
-          people = people.filter(p => p.id !== person.id);
-          render();
-        }
-      };
+      card.querySelector('button[data-delete]').onclick = () => openDeleteModal(person.id);
 
       els.cards.appendChild(card);
     });
 
     const sharedFoods = foods.filter(f => f.isShared);
-    if (sharedFoods.length > 0) {
-      els.commonCard.classList.remove('hidden');
-      els.commonList.innerHTML = sharedFoods.map(food => {
-        const count = food.participants.length || 0;
-        const perPerson = count > 0 ? (food.price * food.count / count) : 0;
-        return `
-                    <div class="bg-white p-5 rounded-xl border ${count === 0 ? 'border-gray-300' : 'border-emerald-300'} shadow-sm">
-                        <div class="flex justify-between items-center mb-3">
-                            <div class="font-semibold text-lg text-gray-800">${food.name}</div>
-                            <div class="text-gray-600">${food.price} × ${food.count} = ${(food.price * food.count).toFixed(2)} с</div>
-                        </div>
-                        <div class="text-sm text-gray-600 mb-4">
-                            Делится на <strong>${count} ${count === 1 ? 'человек' : 'человек'}</strong>
-                            → по <strong>${perPerson.toFixed(2)} с</strong> с человека
-                        </div>
-                        <div class="flex flex-wrap gap-3">
-                            ${people.map(p => `
-                                <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="checkbox" ${food.participants.includes(p.id) ? 'checked' : ''} data-food="${food.id}" data-person="${p.id}" class="w-4 h-4 text-emerald-500 rounded">
-                                    <span class="text-sm font-medium">${p.name}</span>
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-      }).join('');
+    const personalFoods = foods.filter(f => !f.isShared);
+    const hasFoods = sharedFoods.length > 0 || personalFoods.length > 0;
+    els.menuCard.classList.toggle('hidden', !hasFoods);
 
-      els.commonList.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    if (hasFoods) {
+      els.sharedList.innerHTML = sharedFoods.length === 0
+        ? '<div class="text-sm text-emerald-700 bg-white/70 border border-emerald-100 rounded-xl px-4 py-3">Нет общих блюд</div>'
+        : sharedFoods.map(food => {
+            const count = food.participants.length || 0;
+            const perPerson = count > 0 ? (food.price * food.count / count) : 0;
+            return `
+              <div class="bg-white p-4 rounded-xl border ${count === 0 ? 'border-gray-200' : 'border-emerald-200'} shadow-sm">
+                <div class="flex items-start justify-between gap-3 flex-col sm:flex-row">
+                  <div>
+                    <div class="font-semibold text-gray-800 flex items-center gap-2">${food.name}
+                      <button class="text-xs text-emerald-600 hover:text-emerald-800" data-edit="${food.id}">Редактировать</button>
+                    </div>
+                    <div class="text-sm text-gray-500">${food.price} × ${food.count} = ${(food.price * food.count).toFixed(2)} с</div>
+                  </div>
+                  <div class="text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-lg">${count} участника</div>
+                </div>
+                <div class="text-sm text-gray-600 mt-3 mb-3">
+                  Делится → <strong>${perPerson.toFixed(2)} с</strong> с человека
+                </div>
+                <div class="flex flex-wrap gap-3">
+                  ${people.map(p => `
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" ${food.participants.includes(p.id) ? 'checked' : ''} data-food="${food.id}" data-person="${p.id}" class="w-4 h-4 text-emerald-500 rounded">
+                      <span class="text-sm font-medium">${p.name}</span>
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }).join('');
+
+      els.personalList.innerHTML = personalFoods.length === 0
+        ? '<div class="text-sm text-indigo-700 bg-white/70 border border-indigo-100 rounded-xl px-4 py-3">Нет личных блюд</div>'
+        : personalFoods.map(food => {
+            const totalCount = people.reduce((sum, p) => {
+              const item = p.personal.find(i => i.foodId === food.id);
+              return sum + (item ? item.count : 0);
+            }, 0);
+            const activePeople = people.filter(p => {
+              const item = p.personal.find(i => i.foodId === food.id);
+              return item && item.count > 0;
+            }).length;
+            return `
+              <div class="bg-white p-4 rounded-xl border ${totalCount === 0 ? 'border-gray-200' : 'border-indigo-200'} shadow-sm">
+                <div class="flex items-start justify-between gap-3 flex-col sm:flex-row">
+                  <div>
+                    <div class="font-semibold text-gray-800 flex items-center gap-2">${food.name}
+                      <button class="text-xs text-indigo-600 hover:text-indigo-800" data-edit="${food.id}">Редактировать</button>
+                    </div>
+                    <div class="text-sm text-gray-500">Цена: ${food.price} с</div>
+                  </div>
+                  <div class="text-sm text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-lg">${activePeople} выбрали · ${totalCount} порций</div>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+      els.menuCard.querySelectorAll('button[data-edit]').forEach(btn => {
+        btn.onclick = () => openEditModal(+btn.dataset.edit);
+      });
+
+      els.sharedList.querySelectorAll('input[type=checkbox]').forEach(cb => {
         cb.onchange = () => {
           const fid = +cb.dataset.food;
           const pid = +cb.dataset.person;
@@ -394,8 +591,6 @@
           render();
         };
       });
-    } else {
-      els.commonCard.classList.add('hidden');
     }
 
     const grandTotal = people.reduce((sum, p) => {
@@ -415,10 +610,11 @@
 
     els.totalSum.textContent = `${grandTotal.toFixed(2)} с`;
     els.shareBtn.classList.toggle('hidden', grandTotal === 0);
+    persistSession();
   }
 
   els.shareBtn.onclick = () => {
-    let text = "Расчёт заказа\n\n";
+    let text = "🍽️ Расчёт заказа\n";
     people.forEach(p => {
       let total = 0;
       p.personal.forEach(i => {
@@ -430,13 +626,174 @@
       });
       if (tipPercent > 0 && total > 0) total *= (1 + tipPercent/100);
       if (delivery > 0 && people.length > 0) total += delivery / people.length;
-      text += `${p.name}: ${total.toFixed(2)} с\n`;
+      text += `\n👤 ${p.name}: ${total.toFixed(2)} с`;
     });
-    text += `\nЧаевые: ${tipPercent}%\nДоставка: ${delivery} с\nИтого: ${els.totalSum.textContent}`;
-    navigator.clipboard.writeText(text).then(() => alert("Скопировано!"));
+    const comment = els.comment.value.trim();
+    text += `\n\n💁‍♂️ Чаевые: ${tipPercent}%`;
+    text += `\n🛵 Доставка: ${delivery} с`;
+    text += `\n🧾 Итог: ${els.totalSum.textContent}`;
+    if (comment) text += `\n\n💬 Комментарий: ${comment}`;
+    navigator.clipboard.writeText(text).then(() => showToast("Скопировано в буфер обмена"));
   };
 
-  render();
+  function openEditModal(foodId) {
+    editingFoodId = Number(foodId);
+    const food = foods.find(f => f.id === editingFoodId);
+    if (!food) {
+      showToast('Блюдо не найдено');
+      return;
+    }
+    els.editName.value = food.name;
+    els.editPrice.value = food.price;
+    els.editTitle.textContent = food.isShared ? 'Редактировать общее блюдо' : 'Редактировать личное блюдо';
+    els.modalEdit.classList.remove('hidden');
+    requestAnimationFrame(() => els.editName.focus());
+  }
+
+  function closeEditModal() {
+    editingFoodId = null;
+    els.modalEdit.classList.add('hidden');
+    els.editName.value = '';
+    els.editPrice.value = '';
+  }
+
+  function openDeleteModal(id) {
+    pendingDeleteId = id;
+    els.modalDelete.classList.remove('hidden');
+    requestAnimationFrame(() => els.confirmDelete.focus());
+  }
+
+  function closeDeleteModal() {
+    pendingDeleteId = null;
+    els.modalDelete.classList.add('hidden');
+  }
+
+  els.cancelDelete.onclick = closeDeleteModal;
+
+  els.confirmDelete.onclick = () => {
+    if (pendingDeleteId === null) return;
+    people = people.filter(p => p.id !== pendingDeleteId);
+    pendingDeleteId = null;
+    closeDeleteModal();
+    render();
+    showToast('Участник удалён');
+  };
+
+  function showToast(message) {
+    clearTimeout(toastTimeout);
+    els.toastMessage.textContent = message;
+    els.toast.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      els.toast.classList.remove('opacity-0', 'translate-y-4');
+    });
+    toastTimeout = setTimeout(() => {
+      els.toast.classList.add('opacity-0', 'translate-y-4');
+      setTimeout(() => els.toast.classList.add('hidden'), 300);
+    }, 2200);
+  }
+
+  function persistSession() {
+    const snapshot = {
+      id: currentSessionId,
+      savedAt: new Date().toISOString(),
+      people: JSON.parse(JSON.stringify(people)),
+      foods: JSON.parse(JSON.stringify(foods)),
+      delivery,
+      tipPercent,
+      comment: els.comment.value.trim()
+    };
+
+    const sessions = loadSessionsFromStorage();
+    const updated = [snapshot, ...sessions.filter(s => s.id !== snapshot.id)].slice(0, 5);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    document.cookie = `lastSession=${snapshot.id}; path=/; max-age=${60 * 60 * 24 * 365}`;
+    renderSessions(updated);
+  }
+
+  function renderSessions(list) {
+    const sessions = list || loadSessionsFromStorage();
+    if (sessions.length === 0) {
+      els.sessionSelect.innerHTML = '<option value="">Нет сохранённых сеансов</option>';
+      return;
+    }
+
+    const hasCurrent = sessions.some(s => s.id === currentSessionId);
+    const options = [];
+    if (!hasCurrent) {
+      options.push('<option value="">Текущий сеанс (не сохранён)</option>');
+    }
+
+    options.push(...sessions.map(s => {
+      const date = new Date(s.savedAt).toLocaleString('ru-RU');
+      const selected = hasCurrent && s.id === currentSessionId ? 'selected' : '';
+      return `<option value="${s.id}" ${selected}>${date}</option>`;
+    }));
+
+    els.sessionSelect.innerHTML = options.join('');
+    els.sessionSelect.value = hasCurrent ? String(currentSessionId) : '';
+  }
+
+  function loadSessionsFromStorage() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function loadSessionById(id, silent = false) {
+    const sessions = loadSessionsFromStorage();
+    const session = sessions.find(s => s.id === id);
+    if (!session) return;
+    currentSessionId = session.id;
+    people = session.people || [];
+    foods = session.foods || [];
+    delivery = session.delivery || 0;
+    tipPercent = session.tipPercent || 0;
+    personId = Math.max(0, ...people.map(p => p.id)) + 1;
+    foodId = Math.max(0, ...foods.map(f => f.id)) + 1;
+    els.deliveryCost.value = delivery;
+    els.tipPercent.value = tipPercent;
+    els.comment.value = session.comment || '';
+    renderSessions(sessions);
+    render();
+    if (!silent) showToast('Сеанс загружен');
+  }
+
+  els.sessionSelect.onchange = () => {
+    const id = +els.sessionSelect.value;
+    if (!id) return;
+    loadSessionById(id);
+  };
+
+  els.newSession.onclick = () => {
+    people = [];
+    foods = [];
+    delivery = 0;
+    tipPercent = 0;
+    personId = 0;
+    foodId = 0;
+    editingFoodId = null;
+    currentSessionId = Date.now();
+    els.deliveryCost.value = '';
+    els.tipPercent.value = '';
+    els.comment.value = '';
+    renderSessions(loadSessionsFromStorage());
+    render();
+    showToast('Создан новый сеанс');
+  };
+
+  function initializeFromLastSession() {
+    const sessions = loadSessionsFromStorage();
+    renderSessions(sessions);
+    if (sessions.length === 0) {
+      render();
+      return;
+    }
+    loadSessionById(sessions[0].id, true);
+  }
+
+  initializeFromLastSession();
 </script>
 </body>
 </html>
